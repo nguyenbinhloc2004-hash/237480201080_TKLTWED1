@@ -1,32 +1,82 @@
-ex04
+<!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<title>Đăng ký xét tuyển</title>
+    <meta charset="UTF-8">
+    <title>Bài tập 3.4</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: auto;
+            font-family: "Times New Roman";
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        th, td {
+            border: 1px solid black;
+            text-align: center;
+            padding: 10px;
+        }
+
+        /* Hàng tiêu đề */
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* Dòng buổi sáng */
+        .sang {
+            background-color: #E3F2FD;
+        }
+
+        /* Dòng buổi chiều */
+        .chieu {
+            background-color: #FFF3E0;
+        }
+
+        /* Ô Thứ/Buổi */
+        .buoi {
+            background-color: #FFCDD2;
+        }
+    </style>
 </head>
 <body>
 
-<h1 style="font-family:Verdana; color:red;">
-ĐĂNG KÝ XÉT TUYỂN
-</h1>
+    <table>
+        <tr>
+            <th>Thứ/Buổi</th>
+            <th>Hai</th>
+            <th>Ba</th>
+            <th>Tư</th>
+            <th>Năm</th>
+            <th>Sáu</th>
+            <th>Bảy</th>
+            <th>CN</th>
+        </tr>
 
-<form>
-Họ tên: <input type="text"><br><br>
+        <tr class="sang">
+            <td class="buoi">Sáng</td>
+            <td>Toán</td>
+            <td>Lý</td>
+            <td>Hóa</td>
+            <td>Toán</td>
+            <td>Lý</td>
+            <td>Hóa</td>
+            <td></td>
+        </tr>
 
-Giới tính:
-<input type="radio" name="gt"> Nam
-<input type="radio" name="gt"> Nữ
-<br><br>
-
-Ngành thi:
-<input type="radio" name="nganh"> CNTT
-<input type="radio" name="nganh"> Mầm non
-<input type="radio" name="nganh"> Âm nhạc
-<br><br>
-
-<input type="submit" value="Đồng ý">
-<input type="reset" value="Không đồng ý">
-</form>
+        <tr class="chieu">
+            <td class="buoi">Chiều</td>
+            <td>Văn</td>
+            <td>Sử</td>
+            <td>Sinh</td>
+            <td>Địa</td>
+            <td>GDCD</td>
+            <td>Anh</td>
+            <td></td>
+        </tr>
+    </table>
 
 </body>
 </html>

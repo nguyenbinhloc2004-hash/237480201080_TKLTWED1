@@ -1,36 +1,79 @@
-ex05
+<!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Đăng ký thể thao</title>
+<title>Bài 3.5</title>
+<style>
+body{
+    font-family: Arial;
+}
+
+h1,h2,h3{
+    text-align:center;
+}
+
+.nam1 li{
+    font-family: Verdana;
+    color:black;
+    font-size:13pt;
+}
+
+.nam2 li{
+    font-family: Tahoma;
+    color:black;
+    font-size:13pt;
+}
+
+.nam3 li{
+    font-family: "Times New Roman";
+    color:black;
+    font-size:13pt;
+}
+
+.totnghiep li{
+    font-family: Verdana;
+    color:red;
+    font-size:13pt;
+}
+</style>
 </head>
+
 <body>
 
-<h1 style="font-family:Verdana; color:red;">
-PHIẾU ĐĂNG KÝ DỰ THI THỂ THAO
-</h1>
+<h2>TRƯỜNG ĐẠI HỌC BẠC LIÊU</h2>
+<h3>KHOA KỸ THUẬT VÀ CÔNG NGHỆ</h3>
+<h1>CHƯƠNG TRÌNH ĐÀO TẠO NGÀNH CÔNG NGHỆ THÔNG TIN</h1>
 
-<form>
-Họ tên: <input type="text"><br><br>
-Mật khẩu: <input type="password"><br><br>
+<ol>
+    <li><b>Năm thứ 1</b>
+        <ul class="nam1">
+            <li>Tin học căn bản</li>
+            <li>Lập trình căn bản</li>
+        </ul>
+    </li>
 
-Môn thể thao:<br>
-<input type="checkbox"> Bóng đá<br>
-<input type="checkbox"> Bóng chuyền<br>
-<input type="checkbox"> Điền kinh<br>
-<input type="checkbox"> Bơi lội<br><br>
+    <li><b>Năm thứ 2</b>
+        <ul class="nam2">
+            <li>Cấu trúc dữ liệu và giải thuật</li>
+            <li>Lập trình C nâng cao</li>
+            <li>Lập trình quản lý</li>
+        </ul>
+    </li>
 
-Thiết bị:
-<select>
-    <option>CPU</option>
-    <option>Mainboard</option>
-    <option>RAM</option>
-</select>
-<br><br>
+    <li><b>Năm thứ 3</b>
+        <ul class="nam3">
+            <li>Phân tích thiết kế hệ thống</li>
+            <li>Cơ sở dữ liệu</li>
+        </ul>
+    </li>
+</ol>
 
-<input type="submit" value="Submit">
-<input type="reset" value="Reset">
-</form>
+<p><b><i>Thi tốt nghiệp:</i></b></p>
+<ul class="totnghiep">
+    <li>Triết học</li>
+    <li>Toán rời rạc</li>
+    <li>Tin học cơ sở: Cơ sở dữ liệu và cấu trúc dữ liệu</li>
+</ul>
 
 </body>
 </html>
