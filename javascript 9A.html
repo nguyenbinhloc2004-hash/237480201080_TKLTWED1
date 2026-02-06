@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sap xep mang</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    
+    <body>
+        <script>
+            var Soluong;
+            var DS = new Array(); // Sửa lỗi 2: Khởi tạo mảng rỗng thay vì Array(100)
+
+            // Nhập số lượng
+            Soluong = prompt("Ban can nhap bao nhieu nguoi: ", 5);
+            
+            // Chuyển đổi input thành số nguyên để tránh lỗi vòng lặp
+            Soluong = parseInt(Soluong); 
+
+            // Nhập dữ liệu
+            for (var i = 0; i < Soluong; i++) // Sửa lỗi 3: Thêm 'var' cho i
+            {
+                DS[i] = prompt("Nhap ho ten nguoi thu " + (i+1) + ":", "");
+            }
+
+            // Sắp xếp
+            DS.sort();
+
+            // Hiển thị
+            document.write("<h1> Danh sach da sap xep </h1>");
+            
+            // Cách hiển thị tối ưu hơn cho mảng
+            for (var i = 0; i < DS.length; i++) 
+            {
+                document.write(DS[i]);
+                document.write("<br>");
+            }
+        </script>
+    </body>
+</html>

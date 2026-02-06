@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <title> BAI TAP
+            JavaScript 5B
+        </title>
+    </head>
+    <body>
+        <h2>
+            lich thong bao thu ngay thang nam
+        </h2>
+        <script langusge="JavaScript">
+            // day la khoi tao doi tuong Date da lay thoi gian he thong
+            var D = new Date();
+            // day se la lay gia tri ngay , thang , nam
+            var ngay = D.getDate() ;
+            var thang = D.getMonth ();
+        // va se cong them 1 vi thang se bat dau tu 0 
+        var nam = D.getFullYear ();
+        // day se la hien thi noi dung len trang wed
+        document.write("hom nay la ngay :" + ngay +" thang " + thang +" nam " + nam);
+        </script>
+    </body>
+</html>

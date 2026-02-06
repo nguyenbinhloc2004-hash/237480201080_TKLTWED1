@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Danh sach thiet bi</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <script>
+        var Soluong;
+        var dsthietbi = []; 
+        
+        Soluong = prompt("Ban can nhap bao nhieu thiet bi?", 5);
+        Soluong = parseInt(Soluong);
+
+        // 1. Nhập dữ liệu
+        for (var i = 0; i < Soluong; i++) {
+            dsthietbi[i] = prompt("Nhap ten thiet bi thu " + (i + 1) + ":", "");
+        }
+
+        document.write("<h1>Ket qua loc thiet bi</h1>");
+        document.write("<table border='1' cellpadding='5' style='border-collapse: collapse; width: 50%'>");
+        document.write("<tr bgcolor='#cccccc'><th>STT</th><th>Ten thiet bi</th></tr>");
+
+        var STT = 1;
+        var timthay = false;
+
+        // 2. Xử lý hiển thị
+        for (var i = 0; i < dsthietbi.length; i++) {
+            
+            var tenGoc = dsthietbi[i].trim(); // Tên gốc người dùng nhập
+            var tenKiemTra = tenGoc.toLowerCase(); // Chuyển về chữ thường để dễ so sánh
+            
+            // --- SỬA Ở ĐÂY NẾU MUỐN THÊM THIẾT BỊ KHÁC ---
+            // Hiện tại đang lọc: Computer, Mouse, Keyboard, Printer
+            if (tenKiemTra === "may tinh" || tenKiemTra === "chuot" || tenKiemTra === "ban phim" || tenKiemTra === "may in"
+               ||  tenKiemTra === "vga rtx5060" || tenKiemTra === "main" || tenKiemTra === "nguon may tinh")
+            {
+                
+                document.write("<tr>");
+                document.write("<td>" + STT + "</td>");
+                document.write("<td>" + tenGoc + "</td>"); // In ra tên gốc cho đẹp
+                document.write("</tr>");
+                
+                STT++; 
+                timthay = true;
+            }
+        }
+
+        // 3. Thông báo nếu không tìm thấy
+        if (timthay === false) {
+            document.write("<tr><td colspan='2' style='text-align:center; color:red;'>Khong tim thay thiet bi hop le trong danh sach.</td></tr>");
+        }
+
+        document.write("</table>");
+    </script>
+</body>
+</html>

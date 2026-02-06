@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ví">
+    <head>
+        <meta charset="UTF-8">
+        <title> 
+            Bài tập JavaScript 4B
+        </title>
+        <script language="JavaScript">
+                //ham hien thi noi dung cho textbox ho ten
+                function choten() {
+                    // lay gia tri cua o text co id la 'txthoten'
+                    var noidung = document.getElementById("txthoten").value;
+                    alert(noidung);
+                }
+                //hám hien thi noi dung cho textbox don vi
+                function ctdonvi() {
+                // lay gia tri cua o text co id la 'txtdonvi'
+                var noidung = document.getElementById("txtdonvi").value;
+                alert(noidung);
+                }
+        </script>
+    </head>
+    <body>
+        <h2> 
+            Bài tập JavaScript 4B
+        </h2>
+        <input type="text" name="txthoten" id="txthoten" value="Chào">
+        <input type="button" name="hoten" value="hoten" onclick="cthoten()">
+        <br><br> <input type="text" name="txtdonvi" id="txtdonvi" value="donvi">
+        <input type="button" name="donvi" value="donvi" onclick="ctdonvi()">
+    </body>
+</html>

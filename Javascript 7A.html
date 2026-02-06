@@ -1,0 +1,19 @@
+<html>
+    <head>
+    <title> Tinh so tuoi cua ban </title>
+    </head>
+        <meta http-equiv="Content-Type"content="text/html";
+        charset="UTF-8">
+        <body>
+            <script language="JavaScript">
+                var  D = new Date ();
+                var NamSinh, NamHienTai;
+                NamHienTai = D.getFullYear();
+                do {
+                    NamSinh = prompt("Ban sinh nam bao nhieu :","");
+                }while (parseInt(NamSinh)>NamHienTai);
+                alert ("tuoi cau ban bay gio la  :" + (NamHienTai - NamSinh));
+            </script>
+        </body>
+    </title>
+</html>
