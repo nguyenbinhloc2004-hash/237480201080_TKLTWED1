@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Đuổi Hình Bắt Chữ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: white;
+        }
+        
+        .game-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to right, #ffcc00, #ff9966);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .info-item {
+            text-align: center;
+        }
+        
+        .info-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .info-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+        
+        .game-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .image-container {
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+        }
+        
+        .puzzle-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+        
+        .hint-container {
+            width: 100%;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .hint-text {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #ffcc00;
+        }
+        
+        .hint-boxes {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .hint-letter {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            text-transform: uppercase;
+        }
+        
+        .hint-letter.empty {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .answer-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.3rem;
+            border: none;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .answer-input:focus {
+            outline: 3px solid #ffcc00;
+        }
+        
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .game-btn {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .game-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .submit-btn {
+            background: linear-gradient(to right, #4CAF50, #2E7D32);
+            color: white;
+        }
+        
+        .hint-btn {
+            background: linear-gradient(to right, #FF9800, #EF6C00);
+            color: white;
+        }
+        
+        .skip-btn {
+            background: linear-gradient(to right, #2196F3, #0D47A1);
+            color: white;
+        }
+        
+        .new-game-btn {
+            background: linear-gradient(to right, #9C27B0, #6A1B9A);
+            color: white;
+        }
+        
+        .result-message {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            min-height: 40px;
+            margin: 20px 0;
+            padding: 10px;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .correct {
+            background-color: rgba(76, 175, 80, 0.3);
+            color: #C8E6C9;
+            display: block;
+        }
+        
+        .incorrect {
+            background-color: rgba(244, 67, 54, 0.3);
+            color: #FFCDD2;
+            display: block;
+        }
+        
+        .game-rules {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        
+        .game-rules h2 {
+            color: #ffcc00;
+            margin-bottom: 15px;
+        }
+        
+        .rules-list {
+            padding-left: 20px;
+        }
+        
+        .rules-list li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .game-info {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .image-container {
+                height: 300px;
+            }
+            
+            .game-btn {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="game-container">
+        <header>
+            <h1><i class="fas fa-gamepad"></i> ĐUỔI HÌNH BẮT CHỮ</h1>
+            <p>Giải đố hình ảnh, khám phá từ ngữ thú vị!</p>
+        </header>
+        
+        <div class="game-info">
+            <div class="info-item">
+                <div class="info-label">CÂU HỎI</div>
+                <div class="info-value" id="current-question">1/10</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">ĐIỂM SỐ</div>
+                <div class="info-value" id="score">0</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">GỢI Ý CÒN LẠI</div>
+                <div class="info-value" id="hints-left">3</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">THỜI GIAN</div>
+                <div class="info-value" id="timer">60</div>
+            </div>
+        </div>
+        
+        <div class="game-content">
+            <div class="image-container">
+                <img class="puzzle-image" id="puzzle-image" src="" alt="Hình đố">
+            </div>
+            
+            <div class="hint-container">
+                <div class="hint-text">Gợi ý: <span id="hint-text"></span></div>
+                <div class="hint-boxes" id="hint-boxes">
+                    <!-- Các ô chữ cái sẽ được thêm bằng JavaScript -->
+                </div>
+                
+                <input type="text" class="answer-input" id="answer-input" placeholder="Nhập câu trả lời của bạn..." autocomplete="off">
+                
+                <div class="result-message" id="result-message"></div>
+                
+                <div class="buttons-container">
+                    <button class="game-btn submit-btn" id="submit-btn">
+                        <i class="fas fa-paper-plane"></i> TRẢ LỜI
+                    </button>
+                    <button class="game-btn hint-btn" id="hint-btn">
+                        <i class="fas fa-lightbulb"></i> GỢI Ý (-10 điểm)
+                    </button>
+                    <button class="game-btn skip-btn" id="skip-btn">
+                        <i class="fas fa-forward"></i> BỎ QUA (-5 điểm)
+                    </button>
+                    <button class="game-btn new-game-btn" id="new-game-btn">
+                        <i class="fas fa-redo"></i> CHƠI MỚI
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="game-rules">
+            <h2><i class="fas fa-info-circle"></i> LUẬT CHƠI</h2>
+            <ul class="rules-list">
+                <li>Mỗi câu hỏi có một hình ảnh gợi ý cho một từ, cụm từ hoặc thành ngữ tiếng Việt.</li>
+                <li>Bạn có 60 giây để trả lời mỗi câu hỏi.</li>
+                <li>Trả lời đúng: +20 điểm, trả lời sai: 0 điểm.</li>
+                <li>Bạn có 3 lượt gợi ý, mỗi lượt gợi ý sẽ tiết lộ 1 chữ cái và trừ 10 điểm.</li>
+                <li>Bỏ qua câu hỏi sẽ bị trừ 5 điểm và chuyển sang câu tiếp theo.</li>
+                <li>Hoàn thành 10 câu hỏi để kết thúc trò chơi.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Dữ liệu câu hỏi hình ảnh và đáp án
+        const puzzleData = [
+            {
+                imageUrl: "https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=715&q=80",
+                answer: "MÈO",
+                hint: "Động vật nuôi trong nhà, thường bắt chuột"
+            },
+            {
+                imageUrl: "https://images.unsplash.com/photo-1551085254-e96b210db58a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=730&q=80",
+                answer: "XE ĐẠP",
+                hint: "Phương tiện di chuyển có hai bánh, dùng sức người đạp"
+            },
+            {
+                imageUrl: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=714&q=80",
+                answer: "PIZZA",
+                hint: "Món ăn Italy có hình tròn, phủ phô mai và nhiều loại topping"
+            },
+            {
+                imageUrl: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=680&q=80",
+                answer: "RAU CỦ",
+                hint: "Thực phẩm từ thực vật, giàu vitamin và chất xơ"
+            },
+            {
+                imageUrl: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=726&q=80",
+                answer: "BÓNG ĐÁ",
+                hint: "Môn thể thao vua, chơi với quả bóng tròn"
+            },
+            {
+                imageUrl: "https://images.unsplash.com/photo-1531259683007-016a7b628fc3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+                answer: "NÚI",
+                hint: "Địa hình tự nhiên cao hơn xung quanh, có đỉnh và sườn dốc"
+            },
+            {
+                imageUrl: "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+                answer: "TRĂNG",
+                hint: "Vệ tinh tự nhiên của Trái Đất, sáng về đêm"
+            },
+            {
+                imageUrl: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+                answer: "CÀ PHÊ",
+                hint: "Thức uống phổ biến làm từ hạt rang, có caffeine"
+            },
+            {
+                imageUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+                answer: "ĐIỆN THOẠI",
+                hint: "Thiết bị liên lạc không dây phổ biến"
+            },
+            {
+                imageUrl: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+                answer: "SÁCH",
+                hint: "Tập hợp các trang giấy có chữ, dùng để đọc"
+            }
+        ];
+
+        // Biến trạng thái game
+        let currentQuestion = 0;
+        let score = 0;
+        let hintsLeft = 3;
+        let timeLeft = 60;
+        let timerInterval;
+        let gameActive = false;
+        let revealedLetters = [];
+
+        // DOM Elements
+        const puzzleImage = document.getElementById('puzzle-image');
+        const hintText = document.getElementById('hint-text');
+        const hintBoxes = document.getElementById('hint-boxes');
+        const answerInput = document.getElementById('answer-input');
+        const resultMessage = document.getElementById('result-message');
+        const currentQuestionElement = document.getElementById('current-question');
+        const scoreElement = document.getElementById('score');
+        const hintsLeftElement = document.getElementById('hints-left');
+        const timerElement = document.getElementById('timer');
+        const submitBtn = document.getElementById('submit-btn');
+        const hintBtn = document.getElementById('hint-btn');
+        const skipBtn = document.getElementById('skip-btn');
+        const newGameBtn = document.getElementById('new-game-btn');
+
+        // Khởi tạo game
+        function initGame() {
+            currentQuestion = 0;
+            score = 0;
+            hintsLeft = 3;
+            timeLeft = 60;
+            gameActive = true;
+            revealedLetters = [];
+            
+            updateGameInfo();
+            loadQuestion(currentQuestion);
+            startTimer();
+            
+            resultMessage.textContent = "";
+            resultMessage.className = "result-message";
+            answerInput.value = "";
+            answerInput.disabled = false;
+            
+            submitBtn.disabled = false;
+            hintBtn.disabled = false;
+            skipBtn.disabled = false;
+        }
+
+        // Cập nhật thông tin game
+        function updateGameInfo() {
+            currentQuestionElement.textContent = `${currentQuestion + 1}/${puzzleData.length}`;
+            scoreElement.textContent = score;
+            hintsLeftElement.textContent = hintsLeft;
+            timerElement.textContent = timeLeft;
+        }
+
+        // Tải câu hỏi
+        function loadQuestion(questionIndex) {
+            const puzzle = puzzleData[questionIndex];
+            puzzleImage.src = puzzle.imageUrl;
+            hintText.textContent = puzzle.hint;
+            
+            // Tạo ô chữ gợi ý
+            createHintBoxes(puzzle.answer);
+            
+            // Reset revealed letters cho câu hỏi mới
+            revealedLetters = Array(puzzle.answer.length).fill(false);
+            
+            // Reset input
+            answerInput.value = "";
+            resultMessage.textContent = "";
+            resultMessage.className = "result-message";
+        }
+
+        // Tạo các ô chữ gợi ý
+        function createHintBoxes(answer) {
+            hintBoxes.innerHTML = "";
+            
+            for (let i = 0; i < answer.length; i++) {
+                const letterBox = document.createElement('div');
+                letterBox.className = 'hint-letter empty';
+                letterBox.textContent = answer[i] === ' ' ? '' : '?';
+                hintBoxes.appendChild(letterBox);
+            }
+        }
+
+        // Bắt đầu đếm ngược thời gian
+        function startTimer() {
+            clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                if (timeLeft > 0 && gameActive) {
+                    timeLeft--;
+                    timerElement.textContent = timeLeft;
+                } else if (timeLeft === 0 && gameActive) {
+                    handleTimeUp();
+                }
+            }, 1000);
+        }
+
+        // Xử lý khi hết thời gian
+        function handleTimeUp() {
+            resultMessage.textContent = "Hết thời gian! Đáp án là: " + puzzleData[currentQuestion].answer;
+            resultMessage.className = "result-message incorrect";
+            
+            setTimeout(() => {
+                nextQuestion();
+            }, 2000);
+        }
+
+        // Xử lý khi người chơi gửi câu trả lời
+        function submitAnswer() {
+            if (!gameActive) return;
+            
+            const userAnswer = answerInput.value.trim().toUpperCase();
+            const correctAnswer = puzzleData[currentQuestion].answer.toUpperCase();
+            
+            if (userAnswer === correctAnswer) {
+                // Đúng
+                score += 20;
+                resultMessage.textContent = "Chính xác! +20 điểm";
+                resultMessage.className = "result-message correct";
+                
+                // Hiển thị toàn bộ đáp án
+                revealAllLetters();
+            } else {
+                // Sai
+                resultMessage.textContent = `Sai rồi! Đáp án là: ${correctAnswer}`;
+                resultMessage.className = "result-message incorrect";
+                
+                // Hiển thị toàn bộ đáp án
+                revealAllLetters();
+            }
+            
+            updateGameInfo();
+            
+            // Chuyển câu hỏi sau 2 giây
+            setTimeout(() => {
+                nextQuestion();
+            }, 2000);
+        }
+
+        // Tiết lộ một chữ cái gợi ý
+        function useHint() {
+            if (!gameActive || hintsLeft <= 0) return;
+            
+            const answer = puzzleData[currentQuestion].answer;
+            const hintLetters = document.querySelectorAll('.hint-letter');
+            
+            // Tìm một chữ cái chưa được tiết lộ
+            let availableIndices = [];
+            for (let i = 0; i < answer.length; i++) {
+                if (answer[i] !== ' ' && !revealedLetters[i]) {
+                    availableIndices.push(i);
+                }
+            }
+            
+            if (availableIndices.length > 0) {
+                // Chọn ngẫu nhiên một chữ cái
+                const randomIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
+                revealedLetters[randomIndex] = true;
+                
+                // Hiển thị chữ cái
+                hintLetters[randomIndex].textContent = answer[randomIndex];
+                hintLetters[randomIndex].classList.remove('empty');
+                
+                // Trừ điểm và giảm số gợi ý
+                score = Math.max(0, score - 10);
+                hintsLeft--;
+                updateGameInfo();
+            }
+        }
+
+        // Tiết lộ toàn bộ chữ cái (khi trả lời đúng/sai hoặc hết thời gian)
+        function revealAllLetters() {
+            const answer = puzzleData[currentQuestion].answer;
+            const hintLetters = document.querySelectorAll('.hint-letter');
+            
+            for (let i = 0; i < answer.length; i++) {
+                if (answer[i] !== ' ') {
+                    hintLetters[i].textContent = answer[i];
+                    hintLetters[i].classList.remove('empty');
+                }
+            }
+        }
+
+        // Bỏ qua câu hỏi hiện tại
+        function skipQuestion() {
+            if (!gameActive) return;
+            
+            score = Math.max(0, score - 5);
+            updateGameInfo();
+            
+            resultMessage.textContent = `Bỏ qua! -5 điểm. Đáp án là: ${puzzleData[currentQuestion].answer}`;
+            resultMessage.className = "result-message incorrect";
+            
+            revealAllLetters();
+            
+            setTimeout(() => {
+                nextQuestion();
+            }, 2000);
+        }
+
+        // Chuyển đến câu hỏi tiếp theo
+        function nextQuestion() {
+            currentQuestion++;
+            
+            if (currentQuestion < puzzleData.length) {
+                timeLeft = 60;
+                revealedLetters = [];
+                loadQuestion(currentQuestion);
+                updateGameInfo();
+                resultMessage.textContent = "";
+                resultMessage.className = "result-message";
+            } else {
+                endGame();
+            }
+        }
+
+        // Kết thúc game
+        function endGame() {
+            gameActive = false;
+            clearInterval(timerInterval);
+            
+            answerInput.disabled = true;
+            submitBtn.disabled = true;
+            hintBtn.disabled = true;
+            skipBtn.disabled = true;
+            
+            // Hiển thị kết quả cuối cùng
+            resultMessage.textContent = `Game kết thúc! Tổng điểm: ${score}/${puzzleData.length * 20}`;
+            resultMessage.className = "result-message correct";
+            
+            // Đánh giá kết quả
+            let rating = "";
+            const percentage = (score / (puzzleData.length * 20)) * 100;
+            
+            if (percentage >= 90) {
+                rating = "Xuất sắc! ";
+            } else if (percentage >= 70) {
+                rating = "Giỏi lắm! ";
+            } else if (percentage >= 50) {
+                rating = "Khá đấy! ";
+            } else {
+                rating = "Cần cố gắng hơn! ";
+            }
+            
+            setTimeout(() => {
+                alert(`Game kết thúc!\n\nTổng điểm: ${score}/${puzzleData.length * 20}\nĐánh giá: ${rating}\n\nNhấn "Chơi mới" để bắt đầu lại!`);
+            }, 500);
+        }
+
+        // Xử lý sự kiện
+        submitBtn.addEventListener('click', submitAnswer);
+        
+        answerInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                submitAnswer();
+            }
+        });
+        
+        hintBtn.addEventListener('click', useHint);
+        
+        skipBtn.addEventListener('click', skipQuestion);
+        
+        newGameBtn.addEventListener('click', initGame);
+
+        // Khởi động game khi trang web được tải
+        window.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+</html>
